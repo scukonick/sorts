@@ -23,6 +23,7 @@ func SortBogo(input []int) {
 			sl[i], sl[j] = sl[j], sl[i]
 		}
 	}
+
 	for {
 		if check(input) {
 			return
