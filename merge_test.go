@@ -1,10 +1,6 @@
 package main
 
-import (
-	"math/rand"
-	"testing"
-	"time"
-)
+import "testing"
 
 func TestSortMerge(t *testing.T) {
 	a := []int{5, 6, 1, 2, 3, 0, 4}
@@ -15,29 +11,14 @@ func TestSortMerge(t *testing.T) {
 	}
 }
 
-func benchmarkSortMerge(b *testing.B, length int) {
-	a := make([]int, length)
-	rand.Seed(int64(time.Now().Nanosecond()))
-	for i := 0; i < len(a); i++ {
-		a[i] = rand.Int()
-	}
-
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		sl := make([]int, len(a))
-		copy(sl, a[0:len(a)])
-		SortMerge(sl)
-	}
-}
-
 func BenchmarkSortMerge100(b *testing.B) {
-	benchmarkSortMerge(b, 100)
+	benchmarkSortFunc(b, 100, SortMerge)
 }
 
 func BenchmarkSortMerge1000(b *testing.B) {
-	benchmarkSortMerge(b, 1000)
+	benchmarkSortFunc(b, 1000, SortMerge)
 }
 
 func BenchmarkSortMerge10000(b *testing.B) {
-	benchmarkSortMerge(b, 10000)
+	benchmarkSortFunc(b, 10000, SortMerge)
 }

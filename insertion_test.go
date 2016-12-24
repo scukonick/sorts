@@ -1,10 +1,6 @@
 package main
 
-import (
-	"math/rand"
-	"testing"
-	"time"
-)
+import "testing"
 
 func testEq(a, b []int) bool {
 
@@ -38,29 +34,14 @@ func TestSortInsertion(t *testing.T) {
 	}
 }
 
-func benchmarkSortInsertion(b *testing.B, length int) {
-	a := make([]int, length)
-	rand.Seed(int64(time.Now().Nanosecond()))
-	for i := 0; i < len(a); i++ {
-		a[i] = rand.Int()
-	}
-
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		sl := make([]int, len(a))
-		copy(sl, a[0:len(a)])
-		SortInsertion(sl)
-	}
-}
-
 func BenchmarkSortInsertion100(b *testing.B) {
-	benchmarkSortInsertion(b, 100)
+	benchmarkSortFunc(b, 100, SortInsertion)
 }
 
 func BenchmarkSortInsertion1000(b *testing.B) {
-	benchmarkSortInsertion(b, 1000)
+	benchmarkSortFunc(b, 1000, SortInsertion)
 }
 
 func BenchmarkSortInsertion10000(b *testing.B) {
-	benchmarkSortInsertion(b, 10000)
+	benchmarkSortFunc(b, 10000, SortInsertion)
 }
