@@ -38,8 +38,8 @@ func TestSortInsertion(t *testing.T) {
 	}
 }
 
-func BenchmarkSortInsertion(b *testing.B) {
-	var a [20]int
+func benchmarkSortInsertion(b *testing.B, length int) {
+	a := make([]int, length)
 	rand.Seed(int64(time.Now().Nanosecond()))
 	for i := 0; i < len(a); i++ {
 		a[i] = rand.Int()
@@ -51,4 +51,16 @@ func BenchmarkSortInsertion(b *testing.B) {
 		copy(sl, a[0:len(a)])
 		SortInsertion(sl)
 	}
+}
+
+func BenchmarkSortInsertion100(b *testing.B) {
+	benchmarkSortInsertion(b, 100)
+}
+
+func BenchmarkSortInsertion1000(b *testing.B) {
+	benchmarkSortInsertion(b, 1000)
+}
+
+func BenchmarkSortInsertion10000(b *testing.B) {
+	benchmarkSortInsertion(b, 10000)
 }

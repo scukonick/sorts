@@ -15,8 +15,8 @@ func TestSortMerge(t *testing.T) {
 	}
 }
 
-func BenchmarkSortMerge(b *testing.B) {
-	var a [20]int
+func benchmarkSortMerge(b *testing.B, length int) {
+	a := make([]int, length)
 	rand.Seed(int64(time.Now().Nanosecond()))
 	for i := 0; i < len(a); i++ {
 		a[i] = rand.Int()
@@ -28,4 +28,16 @@ func BenchmarkSortMerge(b *testing.B) {
 		copy(sl, a[0:len(a)])
 		SortMerge(sl)
 	}
+}
+
+func BenchmarkSortMerge100(b *testing.B) {
+	benchmarkSortMerge(b, 100)
+}
+
+func BenchmarkSortMerge1000(b *testing.B) {
+	benchmarkSortMerge(b, 1000)
+}
+
+func BenchmarkSortMerge10000(b *testing.B) {
+	benchmarkSortMerge(b, 10000)
 }
