@@ -1,5 +1,7 @@
 package main
 
+import "sync"
+
 func split(r []int) ([]int, []int) {
 	l := len(r)
 	sep := l / 2
@@ -44,6 +46,31 @@ func SortMerge(input []int) {
 	if len(right) >= 2 {
 		SortMerge(right)
 	}
+	result := merge(left, right)
+	copy(input, result)
+
+}
+
+// SortMergeConcurrent sortes input slice of integers
+// using merge algorithm concurrently
+func SortMergeConcurrent(input []int) {
+	left, right := split(input)
+	wg := sync.WaitGroup{}
+	if len(left) >= 2 {
+		wg.Add(1)
+		go func() {
+			SortMerge(left)
+			wg.Done()
+		}()
+	}
+	if len(right) >= 2 {
+		wg.Add(1)
+		go func() {
+			SortMerge(right)
+			wg.Done()
+		}()
+	}
+	wg.Wait()
 	result := merge(left, right)
 	copy(input, result)
 
